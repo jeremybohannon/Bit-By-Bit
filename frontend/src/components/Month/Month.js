@@ -3,20 +3,18 @@ import styled from 'styled-components'
 
 import Bit from '../Bit/Bit'
 
-function Month(props) {
+function Month({ bits }) {
   return (
     <MonthWrapper>
-      {props.data.map((value, index) => {
-        return <Bit key={index} mood={value}/>
+      {Object.keys(bits).map((value, index) => {
+        return <Bit key={bits[value].date || Math.random() * index} bit={bits[value]}/>
       })}
     </MonthWrapper>
   )
 }
 
 const MonthWrapper = styled.div`
-  display: inline-flex;
-  flex-direction: column;
-  height: 100%;
+  display: grid;
 `
 
 export default Month

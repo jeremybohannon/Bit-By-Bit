@@ -1,10 +1,6 @@
-.App {
-  text-align: center;
-  height: 100%;
-}
-
-.App-logo {
-  height: 40vmin;
+body {
+  background: #eeeeee;
+  font-family: 'Varela Round', sans-serif;
 }
 
 .App-header {
