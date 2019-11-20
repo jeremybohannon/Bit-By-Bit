@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Data from './services/Data/Data'
 
 import Byte from './components/Byte/Byte'
+import Loading from './components/Loading/Loading'
 
 function App() {
   const [byteData, setByteData] = useState({})
@@ -23,7 +24,7 @@ function App() {
         <HeaderName>bitBybit</HeaderName>
       </HeaderWrapper>
       {
-        isLoading ? 'Loading...' :
+        isLoading ? <Loading /> :
         <Byte byteData={byteData} />
       }
     </AppWrapper>
