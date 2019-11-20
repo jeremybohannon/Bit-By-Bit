@@ -5,18 +5,16 @@ import Year from '../Year/Year'
 import DayLegend from '../DayLegend/DayLegend'
 import MonthLegend from '../MonthLegend/MonthLegend'
 
-class Byte extends React.Component {
-  render() {
-    return (
-      <YearWithMonthLegendWrapper>
-        <MonthLegend />
-        <YearWithDayLegendWrapper>
-          <DayLegend />
-          <Year byte={this.props.byteData} />
-        </YearWithDayLegendWrapper>
-      </YearWithMonthLegendWrapper>
-    )
-  }
+const Byte = function ({ byteData }) {
+  return (
+    <YearWithMonthLegendWrapper>
+      <MonthLegend />
+      <YearWithDayLegendWrapper>
+        <DayLegend />
+        <Year byte={byteData} />
+      </YearWithDayLegendWrapper>
+    </YearWithMonthLegendWrapper>
+  )
 }
 
 const YearWithMonthLegendWrapper = styled.div`

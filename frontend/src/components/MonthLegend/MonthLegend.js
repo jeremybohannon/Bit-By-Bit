@@ -26,7 +26,7 @@ const MonthWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-basis: 100%;
-  max-width: ${({maxWidth}) => maxWidth || 'inherit'};
+  max-width: ${({ maxWidth }) => maxWidth || 'inherit'};
 `
 
 export default MonthLegend

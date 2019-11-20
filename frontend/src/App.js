@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
 
 import Data from './services/Data/Data'
 
 import Byte from './components/Byte/Byte'
 
-import './App.css'
-
 function App() {
-  const dataService = new Data()
-  const byteData = dataService.getData()
+  const [byteData, setByteData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const dataService = new Data()
+    const byteData = dataService.getData()
+    
+    setByteData(byteData)
+    setIsLoading(false)
+  }, [])
 
   return (
     <AppWrapper>
       <HeaderWrapper>
         <HeaderName>bitBybit</HeaderName>
       </HeaderWrapper>
-      <Byte byteData={byteData} />
+      {
+        isLoading ? 'Loading...' :
+        <Byte byteData={byteData} />
+      }
     </AppWrapper>
   )
 }
@@ -25,6 +34,7 @@ const AppWrapper = styled.div`
   display: block;
   width: 100%;
   max-width: 600px;
+  min-height: 100%;
   margin-left: auto;
   margin-right: auto;
   background: white;
@@ -33,9 +43,9 @@ const AppWrapper = styled.div`
 
 const HeaderWrapper = styled.div`
   display: flex;
-  height: 50px;
   justify-content: space-evenly;
   align-items: center;
+  height: 50px;
   max-width: 560px;
   margin-left: auto;
   margin-right: auto;
