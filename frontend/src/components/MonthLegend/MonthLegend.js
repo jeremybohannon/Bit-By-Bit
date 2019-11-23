@@ -8,7 +8,7 @@ function MonthLegend() {
     <MonthLegendWrapper>
       <MonthWrapper maxWidth={"30px"}></MonthWrapper>
       {months.map((value, index) => {
-        return <MonthWrapper key={index}>{months[index]}</MonthWrapper>
+        return <MonthWrapper key={value + index}>{months[index]}</MonthWrapper>
       })}
     </MonthLegendWrapper>
   )
@@ -20,6 +20,7 @@ const MonthLegendWrapper = styled.div`
   margin-right: auto;
   height: 30px;
   width: 100%;
+  max-width: 400px;
 `
 const MonthWrapper = styled.div`
   display: flex;

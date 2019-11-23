@@ -5,16 +5,16 @@ import Year from '../Year/Year'
 import DayLegend from '../DayLegend/DayLegend'
 import MonthLegend from '../MonthLegend/MonthLegend'
 
-const Byte = function ({ byteData }) {
-  return (
-    <YearWithMonthLegendWrapper>
-      <MonthLegend />
-      <YearWithDayLegendWrapper>
-        <DayLegend />
-        <Year byte={byteData} />
-      </YearWithDayLegendWrapper>
-    </YearWithMonthLegendWrapper>
-  )
+const Byte = function({byteData}) {
+    return (
+      <YearWithMonthLegendWrapper>
+        <MonthLegend />
+        <YearWithDayLegendWrapper>
+          <DayLegend />
+          <Year byte={byteData} />
+        </YearWithDayLegendWrapper>
+      </YearWithMonthLegendWrapper>
+    )
 }
 
 const YearWithMonthLegendWrapper = styled.div`
@@ -36,9 +36,12 @@ const YearWithDayLegendWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 400px;
   height: 100%;
   min-height: 600px;
   max-height: 820px;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 export default Byte
