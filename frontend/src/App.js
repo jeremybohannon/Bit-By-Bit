@@ -5,6 +5,7 @@ import Data from './services/Data/Data'
 
 import Byte from './components/Byte/Byte'
 import Loading from './components/Loading/Loading'
+import Login from './components/Login/Login'
 
 function App() {
   const [byteData, setByteData] = useState({})
@@ -18,15 +19,18 @@ function App() {
     setIsLoading(false)
   }, [])
 
+  
+
   return (
     <AppWrapper>
       <HeaderWrapper>
         <HeaderName>bitBybit</HeaderName>
       </HeaderWrapper>
-      {
+      {/* {
         isLoading ? <Loading /> :
         <Byte byteData={byteData} />
-      }
+      } */}
+      <Login />
     </AppWrapper>
   )
 }
@@ -35,6 +39,7 @@ const AppWrapper = styled.div`
   display: block;
   width: 100%;
   max-width: 600px;
+  height: 100%;
   min-height: 100%;
   margin-left: auto;
   margin-right: auto;
