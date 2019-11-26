@@ -1,0 +1,14 @@
+{
+  "appName": "",
+  "port": "",
+  "mongoDB": {
+    "users": [
+      {
+        "admin": ""
+      }
+    ],
+    "db_url": {
+      "dev": ""
+    }
+  }
+}
