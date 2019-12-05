@@ -10,6 +10,7 @@ import Login from './components/Login/Login'
 function App() {
   const [byteData, setByteData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
+  const [userProfile, setUserProfile] = useState({})
 
   useEffect(() => {
     const dataService = new Data()
@@ -19,18 +20,22 @@ function App() {
     setIsLoading(false)
   }, [])
 
+  useEffect(() => {
+    console.log(userProfile)
+  }, [userProfile])
+
   
 
   return (
     <AppWrapper>
       <HeaderWrapper>
         <HeaderName>bitBybit</HeaderName>
+        <Login setUserProfile={setUserProfile}/>
       </HeaderWrapper>
       {/* {
         isLoading ? <Loading /> :
         <Byte byteData={byteData} />
       } */}
-      <Login />
     </AppWrapper>
   )
 }

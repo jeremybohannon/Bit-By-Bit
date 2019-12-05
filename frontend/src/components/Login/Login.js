@@ -3,9 +3,8 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import styled from 'styled-components'
 import config from '../../config'
 
-export default function Login() {
+export default function Login({setUserProfile}) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userProfile, setUserProfile] = useState({})
 
   function onSignIn(googleUser) {
     if (googleUser && googleUser.error !== undefined) {
@@ -46,11 +45,6 @@ export default function Login() {
 
 const SignInWrapper = styled.div`
   display: block;
-  height: calc(100% - 50px);
-  min-height: calc(100% - 50px);
-  max-width: 560px;
-  margin-left: auto;
-  margin-right: auto;
   box-sizing: border-box;
   background: #efefef;
 `
