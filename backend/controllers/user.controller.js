@@ -25,11 +25,12 @@ createUser = (userId) => {
   return user
 }
 
-exports.read = (req, res, next) => {
-  User.findOne({ "userId": req.params.userId }, (err, User) => {
+exports.read = ({params: {userId}}, res, next) => {
+  User.findOne({ "userId": userId }, (err, User) => {
     if (err) return res.send(err)
     if(User === undefined || User === null) {
-      const user = createUser(req.params.userId)
+      console.log('creating new user')
+      const user = createUser(userId)
       user.save((err, user) => {
         if (err) return next(err)
       })

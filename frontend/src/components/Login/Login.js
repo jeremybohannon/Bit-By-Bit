@@ -3,7 +3,9 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import styled from 'styled-components'
 import config from '../../config'
 
-export default function Login({setUserProfile}) {
+import User from '../../services/User/User'
+
+export default function Login({setUser}) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   function onSignIn(googleUser) {
@@ -12,17 +14,17 @@ export default function Login({setUserProfile}) {
       console.log(googleUser)
       return
     }
-    const profile = {
-      authID: googleUser.getAuthResponse().id_token,
-      userDetails: googleUser.getBasicProfile(),
-      id: null
-    }
-    setUserProfile(profile)
+
+    const authId = googleUser.getAuthResponse().id_token
+    const userDetails = googleUser.getBasicProfile()
+    const newUser = new User(authId, userDetails)
+
+    setUser(newUser)
     setIsLoggedIn(true)
   }
 
   function onLogOut() {
-    setUserProfile({})
+    setUser({})
     setIsLoggedIn(false)
   }
 

@@ -15,7 +15,7 @@ import Login from './components/Login/Login'
 function App() {
   const [byteData, setByteData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [userProfile, setUserProfile] = useState({})
+  const [user, setUser] = useState({})
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [BackendService, setBackendService] = useState({})
 
@@ -24,15 +24,16 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (Object.entries(userProfile).length !== 0) {
-      const userID = userProfile.authID
+    if (Object.entries(user).length !== 0) {
+      const userID = user.getAuthId()
 
       // See if we have this user in our DB
-      // console.log('getting user: ' + userID)
-      BackendService.getUserData(userID).then((user) => {
+      BackendService.getUserData(userID).then((_user) => {
+        console.log(_user)
         setIsLoggedIn(true)
-        setByteData(user.userData)
-        userProfile.id = user._id
+        setByteData(_user.userData)
+        user.setUserData(_user.userData)
+        user.setId(_user._id)
         setIsLoading(false)
       })
     } else {
@@ -40,14 +41,14 @@ function App() {
       setByteData({})
       setIsLoading(false)
     }
-  }, [userProfile])
+  }, [user])
 
   return (
     <AppWrapper>
       <Router>
         <HeaderWrapper>
           <HeaderName>bitBybit</HeaderName>
-          <Login setUserProfile={setUserProfile} />
+          <Login setUser={setUser}/>
         </HeaderWrapper>
         <Switch>
           <Route path="/">
@@ -55,7 +56,7 @@ function App() {
               <div>Login to get started</div> :
               <Byte byteData={byteData} 
               setByteData={setByteData}
-              userProfile={userProfile}
+              userProfile={user}
               BackendService={BackendService}/>
             }
           </Route>

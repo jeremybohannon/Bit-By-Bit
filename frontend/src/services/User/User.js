@@ -1,12 +1,17 @@
 class User {
-  constructor(userID) {
-    this.userID = userID
+  constructor(authId, userDetails = {}, id = null) {
+    this.authId = authId
+    this.userDetails = userDetails
     this.userData = {}
-    this.id = null
+    this.id = id
   }
 
-  getUserID() {
-    return this.userID
+  getAuthId() {
+    return this.authId
+  }
+
+  getUserDetails() {
+    return this.userDetails
   }
 
   getUserData() {

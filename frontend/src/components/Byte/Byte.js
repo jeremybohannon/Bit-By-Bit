@@ -11,20 +11,20 @@ function Byte({ byteData, setByteData, BackendService, userProfile }) {
   const [index, setIndex] = useState({})
 
   useEffect(() => {
+    console.log('updating server')
     if(Object.keys(selectedBit).length > 0 && byteData.length > 0) {
       let newArr = [...byteData]
       newArr[index.month][index.bit].mood = selectedBit.bit.mood
 
       setByteData(newArr)
       async function waitForResp() {
-        // console.log(userProfile.authID)
-        console.log(JSON.stringify(newArr))
-        const resp = await BackendService.updateUserData(userProfile.id, newArr)
-        // console.log(resp)
+        const resp = await BackendService.updateUserData(userProfile.getId(), newArr)
+        const json = await resp.json()
+        console.log(json)
       }
       waitForResp()
     }
-  }, [selectedBit])
+  }, [selectedBit, BackendService])
 
   function handleBitClick(index) {
     setIndex(index)

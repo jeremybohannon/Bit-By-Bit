@@ -12,7 +12,6 @@ class BackendService {
   }
 
   async updateUserData(userId, data) {
-    // console.log(`updating with: ${data}`)
     const resp = await fetch(`${this.path}/user/update`, {
       headers: {
         'Accept': 'application/json',
