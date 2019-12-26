@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import styled from 'styled-components'
 import config from '../../config'
@@ -9,11 +9,13 @@ export default function Login({setUserProfile}) {
   function onSignIn(googleUser) {
     if (googleUser && googleUser.error !== undefined) {
       // TODO notify failure to sign on
+      console.log(googleUser)
       return
     }
     const profile = {
+      authID: googleUser.getAuthResponse().id_token,
       userDetails: googleUser.getBasicProfile(),
-      authID: googleUser.getAuthResponse().id_token
+      id: null
     }
     setUserProfile(profile)
     setIsLoggedIn(true)

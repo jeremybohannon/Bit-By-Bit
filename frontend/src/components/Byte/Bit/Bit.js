@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function Bit({ bit: { date, mood } }) {
+function Bit({ bit: { date, mood }, bitIndex, handleBitClick }) {
   //TODO Get from db or global state
   const colorMap = ['#620ba0c7', '#9e77d0', '#0baef1c9', '#52AA5E', '#388659']
 
-  function bitClick(e) {
-    console.log(date)
+  function bitClick() {
+    handleBitClick(bitIndex)
   }
 
   function borderEval(mood, date) {

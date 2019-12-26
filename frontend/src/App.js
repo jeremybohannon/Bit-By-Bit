@@ -1,50 +1,76 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom'
+
 import styled from 'styled-components'
 
-import Data from './services/Data/Data'
+import Backend from './services/Backend/Backend'
 
 import Byte from './components/Byte/Byte'
-import Loading from './components/Loading/Loading'
 import Login from './components/Login/Login'
 
 function App() {
   const [byteData, setByteData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [userProfile, setUserProfile] = useState({})
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [BackendService, setBackendService] = useState({})
 
   useEffect(() => {
-    const dataService = new Data()
-    const byteData = dataService.getData()
-    
-    setByteData(byteData)
-    setIsLoading(false)
+    setBackendService(new Backend())
   }, [])
 
   useEffect(() => {
-    console.log(userProfile)
-  }, [userProfile])
+    if (Object.entries(userProfile).length !== 0) {
+      const userID = userProfile.authID
 
-  
+      // See if we have this user in our DB
+      // console.log('getting user: ' + userID)
+      BackendService.getUserData(userID).then((user) => {
+        setIsLoggedIn(true)
+        setByteData(user.userData)
+        userProfile.id = user._id
+        setIsLoading(false)
+      })
+    } else {
+      setIsLoggedIn(false)
+      setByteData({})
+      setIsLoading(false)
+    }
+  }, [userProfile])
 
   return (
     <AppWrapper>
-      <HeaderWrapper>
-        <HeaderName>bitBybit</HeaderName>
-        <Login setUserProfile={setUserProfile}/>
-      </HeaderWrapper>
-      {/* {
-        isLoading ? <Loading /> :
-        <Byte byteData={byteData} />
-      } */}
+      <Router>
+        <HeaderWrapper>
+          <HeaderName>bitBybit</HeaderName>
+          <Login setUserProfile={setUserProfile} />
+        </HeaderWrapper>
+        <Switch>
+          <Route path="/">
+            {!isLoggedIn ?
+              <div>Login to get started</div> :
+              <Byte byteData={byteData} 
+              setByteData={setByteData}
+              userProfile={userProfile}
+              BackendService={BackendService}/>
+            }
+          </Route>
+        </Switch>
+      </Router>
     </AppWrapper>
   )
 }
 
 const AppWrapper = styled.div`
   display: block;
+  position: relative;
   width: 100%;
   max-width: 600px;
-  height: 100%;
+  height: fit-content;
   min-height: 100%;
   margin-left: auto;
   margin-right: auto;

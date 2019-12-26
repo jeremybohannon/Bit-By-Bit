@@ -9,14 +9,14 @@ class MongooseService {
     mongoose.set('useUnifiedTopology', true)
     mongoose.set('useNewUrlParser', true)
     mongoose.Promise = global.Promise;
-    console.log(this.mongoDB)
+
     try  {
       await mongoose.connect(this.mongoDB);
     } catch (err) {
       console.log(err)
     }
 
-    let db = mongoose.connection;
+    const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'MongoDB connection error:'));
   }
 }

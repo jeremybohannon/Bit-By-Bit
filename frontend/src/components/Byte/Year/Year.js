@@ -3,11 +3,14 @@ import styled from 'styled-components'
 
 import Month from '../Month/Month'
 
-function Year({ byte }) {
+function Year({ byte, handleBitClick }) {
   return (
     <YearWrapper>
       {Object.keys(byte).map((value, index) => {
-        return <Month key={index} bits={byte[value]} />
+        return <Month key={`month:${index}`} 
+        monthIndex={index} 
+        bits={byte[value]} 
+        handleBitClick={handleBitClick}/>
       })}
     </YearWrapper>
   )
