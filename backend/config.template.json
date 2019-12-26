@@ -1,6 +1,6 @@
 {
-  "appName": "",
-  "port": "",
+  "appName": "Bit-By-Bit",
+  "port": "8000",
   "mongoDB": {
     "users": [
       {
@@ -8,7 +8,7 @@
       }
     ],
     "db_url": {
-      "dev": ""
+      "dev": "mongodb+srv://"
     }
   }
 }
