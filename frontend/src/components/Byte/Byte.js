@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Year from './Year/Year'
@@ -12,7 +12,7 @@ function Byte({ byteData, setByteData, BackendService, userProfile }) {
 
   async function updateServer(callBack = () => {}) {
     let newArr = [...byteData]
-    newArr[index.month][index.bit].mood = selectedBit.bit.mood
+    newArr[index.month][index.bit] = selectedBit.bit
 
     setByteData(newArr)
     try {

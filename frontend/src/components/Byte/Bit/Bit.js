@@ -5,13 +5,22 @@ function Bit({ bit: { date, mood }, bitIndex, handleBitClick }) {
   //TODO Get from db or global state
   const colorMap = ['#620ba0c7', '#9e77d0', '#0baef1c9', '#52AA5E', '#388659']
 
+  /**
+   * When bit is clicked, if the date is valid, pass index to callback
+   */
   function bitClick() {
-    handleBitClick(bitIndex)
+    if (date !== null)
+      handleBitClick(bitIndex)
   }
 
+  /**
+   * If bit does not have a valid date, make invisible border
+   * @param {Int/String} mood 
+   * @param {String} date 
+   */
   function borderEval(mood, date) {
     return date !== null ?
-      mood > -1 ? '#ffffff 0px 0px 1px 0px' : '#808080 0px 0px 1px 0px'
+      parseInt(mood) > -1 ? '#ffffff 0px 0px 1px 0px' : '#808080 0px 0px 1px 0px'
       : ''
   }
 
