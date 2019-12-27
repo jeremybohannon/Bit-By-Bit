@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import Year from './Year/Year'
@@ -10,31 +10,31 @@ function Byte({ byteData, setByteData, BackendService, userProfile }) {
   const [selectedBit, setSelectedBit] = useState({})
   const [index, setIndex] = useState({})
 
-  useEffect(() => {
-    console.log('updating server')
-    if(Object.keys(selectedBit).length > 0 && byteData.length > 0) {
-      let newArr = [...byteData]
-      newArr[index.month][index.bit].mood = selectedBit.bit.mood
+  async function updateServer(callBack = () => {}) {
+    let newArr = [...byteData]
+    newArr[index.month][index.bit].mood = selectedBit.bit.mood
 
-      setByteData(newArr)
-      async function waitForResp() {
-        const resp = await BackendService.updateUserData(userProfile.getId(), newArr)
-        const json = await resp.json()
-        console.log(json)
-      }
-      waitForResp()
+    setByteData(newArr)
+    try {
+      const resp = await BackendService.updateUserData(userProfile.getAuthId(), newArr)
+      const json = await resp.json()
+      // TODO test wiht null and make pretty
+      callBack(json)
+    } catch (e) {
+      console.error(e)
+      callBack(null)
     }
-  }, [selectedBit, BackendService])
+  }
 
   function handleBitClick(index) {
     setIndex(index)
-    setSelectedBit({bit: byteData[index.month][index.bit], index: index})
+    setSelectedBit({ bit: byteData[index.month][index.bit], index: index })
   }
 
   return (
     <React.Fragment>
       {/* Todo, make this own function to share */}
-      <Editor selectedBit={selectedBit} setSelectedBit={setSelectedBit}/>
+      <Editor selectedBit={selectedBit} setSelectedBit={setSelectedBit} updateServer={updateServer} />
       <YearWithMonthLegendWrapper>
         <MonthLegend />
         <YearWithDayLegendWrapper>

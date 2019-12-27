@@ -15,7 +15,7 @@ import Login from './components/Login/Login'
 function App() {
   const [byteData, setByteData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({authId: null})
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [BackendService, setBackendService] = useState({})
 
@@ -24,12 +24,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (Object.entries(user).length !== 0) {
+    if (Object.entries(user).length > 1) {
       const userID = user.getAuthId()
 
       // See if we have this user in our DB
       BackendService.getUserData(userID).then((_user) => {
-        console.log(_user)
         setIsLoggedIn(true)
         setByteData(_user.userData)
         user.setUserData(_user.userData)
@@ -41,7 +40,7 @@ function App() {
       setByteData({})
       setIsLoading(false)
     }
-  }, [user])
+  }, [user.authId])
 
   return (
     <AppWrapper>

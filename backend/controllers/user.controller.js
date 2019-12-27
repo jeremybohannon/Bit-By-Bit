@@ -25,13 +25,12 @@ createUser = (userId) => {
   return user
 }
 
-exports.read = ({params: {userId}}, res, next) => {
-  User.findOne({ "userId": userId }, (err, User) => {
+exports.read = ({ params: { userId } }, res, next) => {
+  User.findOne({ userId: userId }, (err, User) => {
     if (err) return res.send(err)
-    if(User === undefined || User === null) {
-      console.log('creating new user')
+    if (User === undefined || User === null) {
       const user = createUser(userId)
-      user.save((err, user) => {
+      user.save(err => {
         if (err) return next(err)
       })
       User = user
@@ -40,10 +39,8 @@ exports.read = ({params: {userId}}, res, next) => {
   })
 }
 
-exports.update = (req, res, next) => {
-  const userId = req.body.userId
-  const userData = req.body.data
-  User.findOneAndUpdate(userId, {$set: {"userData":userData}}, {upsert: false, new: true, useFindAndModify: false}, (err, user) => {
+exports.update = ({ body: { userId, data } }, res, next) => {
+  User.findOneAndUpdate({ userId: userId }, { $set: { userData: data } }, { useFindAndModify: false }, (err, user) => {
     if (err) {
       console.log(err)
       return next(err)

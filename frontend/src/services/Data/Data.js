@@ -34,7 +34,7 @@ class Data {
 
   async getUserData(userID) {
     const resp = await fetch(`${this.path}/user/${userID}`, {mode: 'no-cors'})
-    const json = await resp.json
+    const json = await resp.json()
     
     return json
   }

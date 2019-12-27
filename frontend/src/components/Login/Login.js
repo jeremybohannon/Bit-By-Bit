@@ -14,8 +14,7 @@ export default function Login({setUser}) {
       console.log(googleUser)
       return
     }
-
-    const authId = googleUser.getAuthResponse().id_token
+    const authId = googleUser.getBasicProfile().getEmail()
     const userDetails = googleUser.getBasicProfile()
     const newUser = new User(authId, userDetails)
 
