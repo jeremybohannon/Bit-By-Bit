@@ -40,7 +40,6 @@ exports.read = ({ params: { userId } }, res, next) => {
 }
 
 exports.update = ({ body: { userId, data } }, res, next) => {
-  console.log(data[0][0])
   User.findOneAndUpdate({ userId: userId }, { $set: { userData: data } }, { useFindAndModify: false }, (err, user) => {
     if (err) {
       console.log(err)

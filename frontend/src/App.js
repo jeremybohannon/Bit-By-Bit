@@ -4,18 +4,21 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-
 import styled from 'styled-components'
+
+import Navbar from 'react-bootstrap/Navbar'
+import Button from 'react-bootstrap/Button'
 
 import Backend from './services/Backend/Backend'
 
 import Byte from './components/Byte/Byte'
+import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 
 function App() {
   const [byteData, setByteData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [user, setUser] = useState({authId: null})
+  const [user, setUser] = useState({ authId: null })
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [BackendService, setBackendService] = useState({})
 
@@ -29,11 +32,15 @@ function App() {
 
       // See if we have this user in our DB
       BackendService.getUserData(userID).then((_user) => {
-        setIsLoggedIn(true)
-        setByteData(_user.userData)
-        user.setUserData(_user.userData)
-        user.setId(_user._id)
-        setIsLoading(false)
+        if (_user !== undefined || _user !== null) {
+          setIsLoggedIn(true)
+          setByteData(_user.userData)
+          user.setUserData(_user.userData)
+          user.setId(_user._id)
+          setIsLoading(false)
+        } else {
+          console.error('User is undefined')
+        }
       })
     } else {
       setIsLoggedIn(false)
@@ -46,17 +53,17 @@ function App() {
     <AppWrapper>
       <Router>
         <HeaderWrapper>
-          <HeaderName>bitBybit</HeaderName>
+          <HeaderName href="#home">bitBybit</HeaderName>
           <Login setUser={setUser}/>
         </HeaderWrapper>
         <Switch>
           <Route path="/">
             {!isLoggedIn ?
-              <div>Login to get started</div> :
-              <Byte byteData={byteData} 
-              setByteData={setByteData}
-              userProfile={user}
-              BackendService={BackendService}/>
+              <Home /> :
+              <Byte byteData={byteData}
+                setByteData={setByteData}
+                userProfile={user}
+                BackendService={BackendService} />
             }
           </Route>
         </Switch>
@@ -78,21 +85,18 @@ const AppWrapper = styled.div`
   box-shadow: grey 0px 0px 10px 0px;
 `
 
-const HeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 50px;
-  max-width: 560px;
+const HeaderWrapper = styled(Navbar)`
+  justify-content: space-between !important;
   margin-left: auto;
   margin-right: auto;
-  background: #efefef;
+  height: 50px;
+  max-width: 560px;
+  background: white;
 `
 
-const HeaderName = styled.h1`
-  height: fit-content;
-  margin: 0;
-  font-size: 20px;
+const HeaderName = styled(Navbar.Brand)`
+  font-size: 27px !important;
+  color: #83d0ff !important;
 `
 
 export default App

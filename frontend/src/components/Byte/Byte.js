@@ -53,7 +53,7 @@ const YearWithMonthLegendWrapper = styled.div`
   max-width: 560px;
   margin-left: auto;
   margin-right: auto;
-  background: #efefef;
+  background-color: white;
   color: #6c6d6d;
   box-sizing: border-box;
   padding-bottom: 10px;

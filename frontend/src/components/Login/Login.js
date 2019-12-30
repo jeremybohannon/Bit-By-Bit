@@ -47,7 +47,4 @@ export default function Login({setUser}) {
 }
 
 const SignInWrapper = styled.div`
-  display: block;
-  box-sizing: border-box;
-  background: #efefef;
 `

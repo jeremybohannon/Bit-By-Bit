@@ -12,6 +12,9 @@ function Editor({ selectedBit, setSelectedBit, updateServer }) {
   const [formIsDirty, setFormIsDirty] = useState(false)
   const [showAlert, setShowAlert] = useState(null)
 
+  //TODO Get from db or global state
+  const colorMap = ['#620ba0c7', '#9e77d0', '#0baef1c9', '#52AA5E', '#388659']
+
   function onExit() {
     setSelectedBit({})
     setFormIsDirty(false)
@@ -60,6 +63,11 @@ function Editor({ selectedBit, setSelectedBit, updateServer }) {
     }))
   }
 
+  function formatDate(date) {
+    const dateObj = new Date(date)
+    return dateObj.toDateString()
+  }
+
   return (
     <EditorWrapper isActive={Object.keys(selectedBit).length > 0}>
       {
@@ -70,19 +78,20 @@ function Editor({ selectedBit, setSelectedBit, updateServer }) {
             </EditorHeader>
             <EditorContent>
               <Form>
+                <h4>{formatDate(selectedBit.bit.date)}</h4>
                 <Form.Group>
-                  <h4>Mood</h4>
+                  <Form.Label>Mood</Form.Label>
                   <StyledButtonToolbar>
                     <ToggleButtonGroup
                       type="radio"
                       name="options"
                       defaultValue={parseInt(selectedBit.bit.mood)}
                       onChange={updateBit}>
-                      <ToggleButton value={0}>Very Bad</ToggleButton>
-                      <ToggleButton value={1}>Bad</ToggleButton>
-                      <ToggleButton value={2}>Neutral</ToggleButton>
-                      <ToggleButton value={3}>Good</ToggleButton>
-                      <ToggleButton value={4}>Very Good</ToggleButton>
+                      <StyledToggleButton value={0} colormap={colorMap}>Very Bad</StyledToggleButton>
+                      <StyledToggleButton value={1} colormap={colorMap}>Bad</StyledToggleButton>
+                      <StyledToggleButton value={2} colormap={colorMap}>Neutral</StyledToggleButton>
+                      <StyledToggleButton value={3} colormap={colorMap}>Good</StyledToggleButton>
+                      <StyledToggleButton value={4} colormap={colorMap}>Very Good</StyledToggleButton>
                     </ToggleButtonGroup>
                   </StyledButtonToolbar>
                 </Form.Group>
@@ -91,14 +100,14 @@ function Editor({ selectedBit, setSelectedBit, updateServer }) {
                   <Form.Control as="textarea" rows="3" value={`${selectedBit.bit.notes}`} onChange={updateNotes} />
                 </Form.Group>
                 <StyledFormGroupSave>
-                {
-                  formIsDirty ?
-                    <StyledButton variant="primary"
-                      disabled={isLoading}
-                      onClick={!isLoading ? updateData : null}>{isLoading ? 'Saving...' : 'Save'}</StyledButton>
-                    : <div></div>
-                }
-                </StyledFormGroupSave> 
+                  {
+                    formIsDirty ?
+                      <StyledButton variant="primary"
+                        disabled={isLoading}
+                        onClick={!isLoading ? updateData : null}>{isLoading ? 'Saving...' : 'Save'}</StyledButton>
+                      : <div></div>
+                  }
+                </StyledFormGroupSave>
               </Form>
             </EditorContent>
             <EditorFooter>
@@ -167,6 +176,16 @@ const StyledButtonToolbar = styled(ButtonToolbar)`
 
 const StyledButton = styled(Button)`
   height: fit-content;
+`
+
+const StyledToggleButton = styled(ToggleButton)`
+  background-color: ${({ value, colormap }) => colormap[value]} !important;
+  border-color: ${({ value, colormap }) => colormap[value]} !important;
+
+  &:not(:disabled):not(.disabled).active {
+    font-weight: bold;
+    font-style: italic;
+  }
 `
 
 const StyledAlert = styled(Alert)`
