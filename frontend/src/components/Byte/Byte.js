@@ -6,25 +6,9 @@ import DayLegend from './DayLegend/DayLegend'
 import MonthLegend from './MonthLegend/MonthLegend'
 import Editor from './Editor/Editor'
 
-function Byte({ byteData, setByteData, BackendService, userProfile }) {
+function Byte({ byteData, updateServer }) {
   const [selectedBit, setSelectedBit] = useState({})
   const [index, setIndex] = useState({})
-
-  async function updateServer(callBack = () => {}) {
-    let newArr = [...byteData]
-    newArr[index.month][index.bit] = selectedBit.bit
-
-    setByteData(newArr)
-    try {
-      const resp = await BackendService.updateUserData(userProfile.getAuthId(), newArr)
-      const json = await resp.json()
-      // TODO test wiht null and make pretty
-      callBack(json)
-    } catch (e) {
-      console.error(e)
-      callBack(null)
-    }
-  }
 
   function handleBitClick(index) {
     setIndex(index)
@@ -34,12 +18,12 @@ function Byte({ byteData, setByteData, BackendService, userProfile }) {
   return (
     <React.Fragment>
       {/* Todo, make this own function to share */}
-      <Editor selectedBit={selectedBit} setSelectedBit={setSelectedBit} updateServer={updateServer} />
+      <Editor selectedBit={selectedBit} setSelectedBit={setSelectedBit} index={index} updateServer={updateServer} />
       <YearWithMonthLegendWrapper>
         <MonthLegend />
         <YearWithDayLegendWrapper>
           <DayLegend />
-          <Year byte={byteData} handleBitClick={handleBitClick} />
+          <Year byteData={byteData} handleBitClick={handleBitClick} />
         </YearWithDayLegendWrapper>
       </YearWithMonthLegendWrapper>
     </React.Fragment>

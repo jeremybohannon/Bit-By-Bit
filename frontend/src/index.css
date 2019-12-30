@@ -11,3 +11,7 @@ body {
 #root {
   height: 100%;
 }
+
+.margin-top-200 {
+  margin-top: 200px;
+}

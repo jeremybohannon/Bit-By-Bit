@@ -26,7 +26,7 @@ class Data {
         }
       }
     }
-    return year
+    return {[date.getFullYear()]: year}
   }
 }
 
