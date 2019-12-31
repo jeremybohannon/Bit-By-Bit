@@ -1,0 +1,14 @@
+{
+  "appName": "Bit-By-Bit",
+  "port": "8000",
+  "mongoDB": {
+    "users": [
+      {
+        "admin": ""
+      }
+    ],
+    "db_url": {
+      "dev": "mongodb+srv://"
+    }
+  }
+}

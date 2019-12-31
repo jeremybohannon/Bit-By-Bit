@@ -1,9 +1,6 @@
-import config from '../../config'
-
 class Data {
   constructor() {
     this.data = this.generateYear()
-    this.path = `${config.backendPath.url}:${config.backendPath.port}`
   }
 
   getData () {
@@ -31,13 +28,6 @@ class Data {
     }
     return year
   }
-
-  async getUserData(userID) {
-    const resp = await fetch(`${this.path}/user/${userID}`, {mode: 'no-cors'})
-    const json = await resp.json()
-    
-    return json
-  }
 }
 
-export default Data
+module.exports = Data
