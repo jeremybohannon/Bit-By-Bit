@@ -22,7 +22,7 @@ export default function Home() {
           </Col>
         </Row>
       </Container>
-      
+
     </HomeWrapper>
   )
 }
@@ -30,7 +30,7 @@ export default function Home() {
 const HomeWrapper = styled.div`
   display: block;
   width: 100%;
-  height: 855px;
+  height: fit-content;
   max-width: 560px;
   margin-left: auto;
   margin-right: auto;
