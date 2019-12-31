@@ -7,7 +7,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import Alert from 'react-bootstrap/Alert'
 import Form from 'react-bootstrap/Form'
 
-function Editor({ selectedBit, setSelectedBit, updateServer }) {
+function Editor({ selectedBit, setSelectedBit, index, updateServer }) {
   const [isLoading, setIsLoading] = useState(false)
   const [formIsDirty, setFormIsDirty] = useState(false)
   const [showAlert, setShowAlert] = useState(null)
@@ -22,7 +22,7 @@ function Editor({ selectedBit, setSelectedBit, updateServer }) {
 
   function updateData() {
     setIsLoading(true)
-    updateServer((resp) => {
+    updateServer(index, selectedBit, (resp) => {
       if (resp !== null) {
         handleAlert('success', 'Saved!')
         setIsLoading(false)

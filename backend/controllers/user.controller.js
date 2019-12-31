@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
 const Data = require('../services/Data/Data.service')
+const DataService = new Data()
 
 exports.create = (req, res, next) => {
   const user = createUser(req.body.userId)
@@ -12,7 +13,6 @@ exports.create = (req, res, next) => {
 }
 
 createUser = (userId) => {
-  const DataService = new Data()
   const userData = DataService.getData()
 
   const user = new User(
@@ -25,6 +25,13 @@ createUser = (userId) => {
   return user
 }
 
+// addNewYear = (user) => {
+//   const currentYear = '2020'
+//   const newYearData = DataService.generateYear()
+//   user.userData[currentYear] = newYearData[currentYear]
+//   return user
+// }
+
 exports.read = ({ params: { userId } }, res, next) => {
   User.findOne({ userId: userId }, (err, User) => {
     if (err) return res.send(err)
@@ -35,6 +42,10 @@ exports.read = ({ params: { userId } }, res, next) => {
       })
       User = user
     }
+    // const currentYear = new Date().getFullYear()
+    // if(User.userData[currentYear] === undefined || User.userData[currentYear] === null) {
+    //   User = addNewYear(User)
+    // }
     res.send(User)
   })
 }

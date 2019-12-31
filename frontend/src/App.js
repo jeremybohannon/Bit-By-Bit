@@ -7,7 +7,6 @@ import {
 import styled from 'styled-components'
 
 import Navbar from 'react-bootstrap/Navbar'
-import Button from 'react-bootstrap/Button'
 
 import Backend from './services/Backend/Backend'
 
@@ -17,6 +16,7 @@ import Login from './components/Login/Login'
 
 function App() {
   const [byteData, setByteData] = useState({})
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState({ authId: null })
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -33,11 +33,11 @@ function App() {
       // See if we have this user in our DB
       BackendService.getUserData(userID).then((_user) => {
         if (_user !== undefined || _user !== null) {
-          setIsLoggedIn(true)
-          setByteData(_user.userData)
+          setByteData(_user.userData[currentYear])
           user.setUserData(_user.userData)
           user.setId(_user._id)
           setIsLoading(false)
+          setIsLoggedIn(true)
         } else {
           console.error('User is undefined')
         }
@@ -48,6 +48,25 @@ function App() {
       setIsLoading(false)
     }
   }, [user.authId])
+
+  async function updateServer(index, selectedBit, callBack = () => {}) {
+    let newArr = [...byteData]
+    newArr[index.month][index.bit] = selectedBit.bit
+    setByteData(newArr)
+    //Update data in user profile
+    const userData = user.getUserData()
+    userData[currentYear] = newArr
+    user.setUserData(userData)
+    try {
+      const resp = await BackendService.updateUserData(user.getAuthId(), userData)
+      const json = await resp.json()
+      // TODO test wiht null and make pretty
+      callBack(json)
+    } catch (e) {
+      console.error(e)
+      callBack(null)
+    }
+  }
 
   return (
     <AppWrapper>
@@ -61,9 +80,7 @@ function App() {
             {!isLoggedIn ?
               <Home /> :
               <Byte byteData={byteData}
-                setByteData={setByteData}
-                userProfile={user}
-                BackendService={BackendService} />
+                updateServer={updateServer}/>
             }
           </Route>
         </Switch>
