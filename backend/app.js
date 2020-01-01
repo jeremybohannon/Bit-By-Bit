@@ -28,6 +28,6 @@ try {
     passphrase: ''
   }, app)
   console.log(`${config.appName} backend is running on: ${port}`)
-} catch {
-  console.log('error starting app')
+} catch (err) {
+  console.log('error starting app: ' + err)
 }
