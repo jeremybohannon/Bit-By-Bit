@@ -6,9 +6,14 @@ class BackendService {
   }
 
   async getUserData(userID) {
-    const resp = await fetch(`${this.path}/user/${userID}`)
-    const json = await resp.json()
-    return json
+    try { 
+      const resp = await fetch(`${this.path}/user/${userID}`)
+      const json = await resp.json()
+      return json
+    } catch(err) {
+      console.log(err)
+    }
+    return {}
   }
 
   async updateUserData(userId, data) {

@@ -43,7 +43,9 @@ function App() {
         } else {
           console.error('User is undefined')
         }
-      })
+      }).catch(err => {
+        console.error(`Error in getting data: ${err}`)
+      }) 
     } else {
       setIsLoggedIn(false)
       setByteData({})
