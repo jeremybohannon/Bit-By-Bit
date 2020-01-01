@@ -10,6 +10,8 @@ class Data {
   generateYear () {
     const date = new Date()
     const currentYear = date.getFullYear()
+    console.log(date)
+    console.log(currentYear)
     const maxNumDays = 31
     let year = []
 

@@ -33,11 +33,13 @@ function App() {
       // See if we have this user in our DB
       BackendService.getUserData(userID).then((_user) => {
         if (_user !== undefined || _user !== null) {
+          console.log(_user)
           setByteData(_user.userData[currentYear])
           user.setUserData(_user.userData)
           user.setId(_user._id)
           setIsLoading(false)
           setIsLoggedIn(true)
+          console.log('is logged in: ' + isLoggedIn)
         } else {
           console.error('User is undefined')
         }
