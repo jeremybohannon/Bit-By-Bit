@@ -1,4 +1,6 @@
 const express = require('express')
+const https = require('https')
+const fs = require('fs')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const MongooseService = require('./services/Mongoose/Mongoose.service')
@@ -19,6 +21,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/user', user)
 
-app.listen(port, () => {
+try {
+  https.createServer({
+    key: fs.readFileSync('./key.pem'),
+    cert: fs.readFileSync('./cert.pem'),
+    passphrase: ''
+  }, app)
   console.log(`${config.appName} backend is running on: ${port}`)
-})
+} catch {
+  console.log('error starting app')
+}
