@@ -25,7 +25,7 @@ try {
   https.createServer({
     key: fs.readFileSync('./key.pem'),
     cert: fs.readFileSync('./cert.pem'),
-    passphrase: ''
+    passphrase: config.passphrase
   }, app)
   console.log(`${config.appName} backend is running on: ${port}`)
 } catch (err) {

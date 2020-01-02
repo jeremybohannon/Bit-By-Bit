@@ -13,7 +13,7 @@ class BackendService {
     } catch(err) {
       console.log(err)
     }
-    return {}
+    return null
   }
 
   async updateUserData(userId, data) {

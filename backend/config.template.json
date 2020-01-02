@@ -1,6 +1,7 @@
 {
   "appName": "Bit-By-Bit",
   "port": "8000",
+  "passphrase": "",
   "mongoDB": {
     "users": [
       {
