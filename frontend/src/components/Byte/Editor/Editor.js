@@ -65,7 +65,7 @@ function Editor({ selectedBit, setSelectedBit, index, updateServer }) {
 
   function formatDate(date) {
     const dateObj = new Date(date)
-    return dateObj.toDateString()
+    return dateObj.toGMTString()
   }
 
   return (
