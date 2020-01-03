@@ -39,6 +39,9 @@ function Editor({ selectedBit, setSelectedBit, index, updateServer }) {
     setTimeout(() => {
       setShowAlert(null)
     }, 1000)
+    setTimeout(() => {
+      onExit()
+    }, 1200)
   }
 
   function updateBit(value) {
@@ -65,7 +68,7 @@ function Editor({ selectedBit, setSelectedBit, index, updateServer }) {
 
   function formatDate(date) {
     const dateObj = new Date(date)
-    return dateObj.toGMTString()
+    return dateObj.toGMTString().substr(0, 16)
   }
 
   return (
@@ -140,6 +143,7 @@ const EditorContentWrapper = styled.div`
   flex-wrap: wrap;
   height: 50%;
   width: 87%;
+  min-width: 325px;
   border-radius: 7px;
   z-index: 2;
   background-color: #fff;
