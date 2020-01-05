@@ -27,10 +27,27 @@ createUser = (userId) => {
   return user
 }
 
+migrateId = (userId, newId) => {
+  return new Promise((resolve, reject) => {
+    User.findOneAndUpdate({ userId: userId }, { $set: { userId: newId } }, { useFindAndModify: false }, (err, user) => {
+      if (err) {
+        console.log(err)
+        reject(err)
+      }
+      console.log(`Migrated user: ${userId} to: ${newId}`)
+      resolve()
+    })
+  }) 
+}
+
 exports.read = async ({ body: { userId } }, res, next) => {
   const payload = await AuthService.verify(userId)
   if (Object.keys(payload).length >= 1) {
-    const userId = payload.email
+    const oldId = payload.email
+    const userId = payload.sub
+    //Temp migration
+    await migrateId(oldId, userId)
+
     User.findOne({ userId: userId }, (err, User) => {
       if (err) return res.send(err)
       if (User === undefined || User === null) {
@@ -51,7 +68,7 @@ exports.read = async ({ body: { userId } }, res, next) => {
 exports.update = async ({ body: { userId, data } }, res, next) => {
   const payload = await AuthService.verify(userId)
   if (Object.keys(payload).length >= 1) {
-    const userId = payload.email
+    const userId = payload.sub
     User.findOneAndUpdate({ userId: userId }, { $set: { userData: data } }, { useFindAndModify: false }, (err, user) => {
       if (err) {
         console.log(err)
