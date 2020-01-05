@@ -5,8 +5,15 @@ class BackendService {
     this.path = `${config.backendPath.url}:${config.backendPath.port}`
   }
 
-  async getUserData(userID) {
-    const resp = await fetch(`${this.path}/user/${userID}`)
+  async getUserData(userId) {
+    const resp = await fetch(`${this.path}/user/get`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "PUT",
+      body: JSON.stringify({userId})
+    })
     const json = await resp.json()
     return json
   }

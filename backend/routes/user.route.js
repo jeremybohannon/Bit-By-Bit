@@ -5,7 +5,7 @@ const user_controller = require('../controllers/user.controller')
 
 router.post('/create', user_controller.create)
 
-router.get('/:userId', user_controller.read)
+router.put('/get', user_controller.read)
 
 router.put('/update', user_controller.update)
 

@@ -10,5 +10,8 @@
     "db_url": {
       "dev": "mongodb+srv://"
     }
+  },
+  "google": {
+    "client_id": "xxx.apps.googleusercontent.com"
   }
 }
