@@ -29,10 +29,9 @@ function App() {
   useEffect(() => {
     if (Object.entries(user).length > 1) {
       const userID = user.getAuthId()
-
       // See if we have this user in our DB
       BackendService.getUserData(userID).then((_user) => {
-        if (_user !== undefined || _user !== null) {
+        if (_user !== undefined && _user !== null && Object.keys(_user).length !== 0) {
           setByteData(_user.userData[currentYear])
           user.setUserData(_user.userData)
           user.setId(_user._id)
