@@ -34,7 +34,7 @@ migrateId = (userId, newId) => {
         console.log(err)
         reject(err)
       }
-      console.log(`Migrated user: ${userId} to: ${newId}`)
+      console.log(`Migrated user: ${userId}`)
       resolve()
     })
   }) 
