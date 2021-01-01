@@ -16,7 +16,7 @@ import Login from './components/Login/Login'
 
 function App() {
   const [byteData, setByteData] = useState({})
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
+  const [currentYear, setCurrentYear] = useState(2020)
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState({ authId: null })
   const [isLoggedIn, setIsLoggedIn] = useState(false)
